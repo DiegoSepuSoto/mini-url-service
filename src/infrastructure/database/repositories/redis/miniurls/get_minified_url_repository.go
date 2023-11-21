@@ -11,10 +11,10 @@ import (
 func (r *miniURLsRepository) GetMinifiedURL(ctx context.Context, miniURL string) (string, error) {
 	minifiedURL, err := r.redisClient.Get(ctx, miniURL).Result()
 	if err != nil {
-		if err == redis.Nil {
+		if err.Error() == redis.Nil.Error() {
 			log.Printf("%s key does not exist on cache, moving to mongodb layer", miniURL)
 		} else {
-			log.Printf("error retrieving %s key from cache: %s", miniURL, err.Error())
+			log.Printf("error retrieving %s key from cache: %s, moving to mongodb layer", miniURL, err.Error())
 		}
 
 		return r.getMinifiedURLFromMongoDB(ctx, miniURL)

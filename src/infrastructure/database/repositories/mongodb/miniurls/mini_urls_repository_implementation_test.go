@@ -21,7 +21,7 @@ func TestGetMinifiedURLRepository(t *testing.T) {
 		mockMongoSingleResult.On("Decode", mock.AnythingOfType("*entities.MiniURLRecord")).Run(func(args mock.Arguments) {
 			arg := args.Get(0).(*entities.MiniURLRecord)
 
-			arg.NewURL = "abc123"
+			arg.OriginalURL = "https://www.google.cl"
 		}).Return(nil)
 
 		mockMongoCollection.On("FindOne", mock.Anything, mock.Anything, mock.AnythingOfType("[]*options.FindOneOptions")).
@@ -32,7 +32,7 @@ func TestGetMinifiedURLRepository(t *testing.T) {
 		miniURL, err := miniURLsRepository.GetMinifiedURL(context.Background(), "www.google.cl")
 
 		assert.Nil(t, err)
-		assert.Equal(t, "/abc123", miniURL)
+		assert.Equal(t, "https://www.google.cl", miniURL)
 	})
 
 	t.Run("when get minified url gets executed as expected and does not find record in the database", func(t *testing.T) {
