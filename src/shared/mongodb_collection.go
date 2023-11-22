@@ -3,7 +3,6 @@ package shared
 import (
 	"context"
 	"fmt"
-	log "github.com/sirupsen/logrus"
 	"os"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -31,8 +30,6 @@ func CreateMongoDBCollection() *mongoDBCollection {
 	if err != nil {
 		panic(fmt.Sprintf("could not connect to database: [%s]", err.Error()))
 	}
-
-	log.Println("mongodb connection successful!")
 
 	return &mongoDBCollection{
 		mongoCollection: client.Database("marketingDB").Collection("miniurls"),

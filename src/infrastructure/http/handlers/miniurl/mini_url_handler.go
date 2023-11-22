@@ -16,10 +16,10 @@ func NewMiniURLHandler(e *echo.Echo, miniURLUseCase usecase.MiniURLUseCase) *min
 		miniURLUseCase: miniURLUseCase,
 	}
 
-	g := e.Group("/api", middlewares.AuthMiddleware, middlewares.URLParamMiddleware)
+	g := e.Group("/api", middlewares.APIMetricsMiddleware, middlewares.AuthMiddleware, middlewares.URLParamMiddleware)
 	g.GET("/:mini-url", h.GetMinifiedURL)
 
-	f := e.Group("", middlewares.URLParamMiddleware)
+	f := e.Group("", middlewares.RedirectMetricsMiddleware, middlewares.URLParamMiddleware)
 	f.GET("/:mini-url", h.ServeMiniURLHandler)
 
 	return h

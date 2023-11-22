@@ -27,6 +27,7 @@ func (r *miniURLsRepository) GetMinifiedURL(ctx context.Context, miniURL string)
 				"miniURLsRepository")
 		}
 
+		log.Printf("error finding %s key on mongodb, sending error", miniURL)
 		return "", shared.BuildError(http.StatusInternalServerError, shared.DatabaseFindError, err.Error(), "miniURLsRepository")
 	}
 
