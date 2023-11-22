@@ -18,5 +18,9 @@ func (h *miniURLHandler) GetMinifiedURL(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, echo.Map{"message": "error retrieving minified url"})
 	}
 
+	log.WithFields(
+		log.Fields{"originalURL": minifiedURLResponse.MinifiedURL, "miniURL": miniURL},
+	).Info("mini url sent successfully")
+
 	return c.JSON(http.StatusOK, minifiedURLResponse)
 }

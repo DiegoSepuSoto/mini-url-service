@@ -19,5 +19,9 @@ func (h *miniURLHandler) ServeMiniURLHandler(c echo.Context) error {
 		return c.Redirect(http.StatusTemporaryRedirect, os.Getenv("DEFAULT_URL_REDIRECT"))
 	}
 
+	log.WithFields(
+		log.Fields{"originalURL": minifiedURLResponse.MinifiedURL, "miniURL": miniURL},
+	).Info("mini url served successfully")
+
 	return c.Redirect(http.StatusMovedPermanently, minifiedURLResponse.MinifiedURL)
 }
