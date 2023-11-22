@@ -1,0 +1,102 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This service will both return the minified URL and serve to the browser from the mini URL provided",
+        "title": "Mini URL Service",
+        "contact": {
+            "name": "Diego Sepúlveda",
+            "url": "https://github.com/DiegoSepuSoto",
+            "email": "diegosepu.soto@gmail.com"
+        },
+        "version": "0.1"
+    },
+    "host": "localhost:8081",
+    "basePath": "/",
+    "paths": {
+        "/api/{mini-url}": {
+            "get": {
+                "description": "Returns as an API Response the stored minified URL from mini URL provided",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "MiniURL"
+                ],
+                "summary": "Get Minified URL",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.MinifiedURLResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/shared.EchoErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Application Error",
+                        "schema": {
+                            "$ref": "#/definitions/shared.EchoErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/{mini-url}": {
+            "get": {
+                "description": "Serves on the browser the stored minified URL from mini URL provided",
+                "tags": [
+                    "MiniURL"
+                ],
+                "summary": "Serve Minified URL",
+                "responses": {
+                    "301": {
+                        "description": "Full Redirect",
+                        "schema": {
+                            "$ref": "#/definitions/models.MinifiedURLResponse"
+                        }
+                    },
+                    "307": {
+                        "description": "Temporary Redirect",
+                        "schema": {
+                            "$ref": "#/definitions/shared.EchoErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.MinifiedURLResponse": {
+            "type": "object",
+            "properties": {
+                "minified_url": {
+                    "type": "string"
+                }
+            }
+        },
+        "shared.EchoErrorResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

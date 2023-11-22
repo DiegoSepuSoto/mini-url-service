@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"github.com/DiegoSepuSoto/mini-url-service/src/infrastructure/http/handlers/metrics"
 	"os"
 	"os/signal"
 	"syscall"
@@ -13,15 +12,27 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"github.com/DiegoSepuSoto/mini-url-service/src/application/usecase/miniurl"
+	_ "github.com/DiegoSepuSoto/mini-url-service/src/docs"
 	"github.com/DiegoSepuSoto/mini-url-service/src/infrastructure/database/repositories/mongodb/miniurls"
 	redisMiniUrls "github.com/DiegoSepuSoto/mini-url-service/src/infrastructure/database/repositories/redis/miniurls"
 	"github.com/DiegoSepuSoto/mini-url-service/src/infrastructure/http/handlers/health"
+	"github.com/DiegoSepuSoto/mini-url-service/src/infrastructure/http/handlers/metrics"
 	miniurlHandler "github.com/DiegoSepuSoto/mini-url-service/src/infrastructure/http/handlers/miniurl"
 	"github.com/DiegoSepuSoto/mini-url-service/src/shared"
 )
 
 const closeAppTimeout = time.Second * 10
 
+// @title Mini URL Service
+// @version 0.1
+// @description This service will both return the minified URL and serve to the browser from the mini URL provided
+
+// @contact.name Diego Sepúlveda
+// @contact.url https://github.com/DiegoSepuSoto
+// @contact.email diegosepu.soto@gmail.com
+
+// @host localhost:8081
+// @BasePath /
 func main() {
 	log.SetFormatter(&log.JSONFormatter{})
 	log.SetOutput(os.Stdout)

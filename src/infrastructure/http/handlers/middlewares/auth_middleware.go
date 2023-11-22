@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"github.com/DiegoSepuSoto/mini-url-service/src/shared"
 	"net/http"
 	"os"
 	"strings"
@@ -22,11 +23,11 @@ func AuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 			return certificateBytes, nil
 		})
 		if err != nil {
-			return c.JSON(http.StatusUnauthorized, echo.Map{"message": err.Error()})
+			return c.JSON(http.StatusUnauthorized, shared.EchoErrorResponse{Message: err.Error()})
 		}
 
 		if !token.Valid {
-			return c.JSON(http.StatusUnauthorized, echo.Map{"message": "invalid token"})
+			return c.JSON(http.StatusUnauthorized, shared.EchoErrorResponse{Message: "invalid token"})
 		}
 
 		return next(c)

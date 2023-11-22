@@ -2,13 +2,20 @@ package miniurl
 
 import (
 	"context"
-	log "github.com/sirupsen/logrus"
 	"net/http"
 	"os"
 
 	"github.com/labstack/echo/v4"
+	log "github.com/sirupsen/logrus"
 )
 
+// ServeMiniURLHandler godoc
+// @Summary      Serve Minified URL
+// @Description  Serves on the browser the stored minified URL from mini URL provided
+// @Tags         MiniURL
+// @Success      301  {object}  models.MinifiedURLResponse "Full Redirect"
+// @Failure      307  {object}  shared.EchoErrorResponse "Temporary Redirect"
+// @Router       /{mini-url} [get]
 func (h *miniURLHandler) ServeMiniURLHandler(c echo.Context) error {
 	ctx := context.Background()
 	miniURL := c.Param("mini-url")

@@ -7,6 +7,10 @@ const (
 	DatabaseFindError     = "DB_FIND"
 )
 
+type EchoErrorResponse struct {
+	Message string `json:"message"`
+}
+
 type ApplicationError struct {
 	ErrorCode        string
 	ErrorDescription string

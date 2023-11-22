@@ -1,0 +1,69 @@
+basePath: /
+definitions:
+  models.MinifiedURLResponse:
+    properties:
+      minified_url:
+        type: string
+    type: object
+  shared.EchoErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+host: localhost:8081
+info:
+  contact:
+    email: diegosepu.soto@gmail.com
+    name: Diego Sepúlveda
+    url: https://github.com/DiegoSepuSoto
+  description: This service will both return the minified URL and serve to the browser
+    from the mini URL provided
+  title: Mini URL Service
+  version: "0.1"
+paths:
+  /{mini-url}:
+    get:
+      description: Serves on the browser the stored minified URL from mini URL provided
+      responses:
+        "301":
+          description: Full Redirect
+          schema:
+            $ref: '#/definitions/models.MinifiedURLResponse'
+        "307":
+          description: Temporary Redirect
+          schema:
+            $ref: '#/definitions/shared.EchoErrorResponse'
+      summary: Serve Minified URL
+      tags:
+      - MiniURL
+  /api/{mini-url}:
+    get:
+      consumes:
+      - application/json
+      description: Returns as an API Response the stored minified URL from mini URL
+        provided
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.MinifiedURLResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/shared.EchoErrorResponse'
+        "500":
+          description: Application Error
+          schema:
+            $ref: '#/definitions/shared.EchoErrorResponse'
+      summary: Get Minified URL
+      tags:
+      - MiniURL
+swagger: "2.0"
