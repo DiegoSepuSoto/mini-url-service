@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"github.com/DiegoSepuSoto/mini-url-service/src/infrastructure/http/handlers/docs"
 	"os"
 	"os/signal"
 	"syscall"
@@ -16,6 +15,7 @@ import (
 	_ "github.com/DiegoSepuSoto/mini-url-service/src/docs"
 	"github.com/DiegoSepuSoto/mini-url-service/src/infrastructure/database/repositories/mongodb/miniurls"
 	redisMiniUrls "github.com/DiegoSepuSoto/mini-url-service/src/infrastructure/database/repositories/redis/miniurls"
+	"github.com/DiegoSepuSoto/mini-url-service/src/infrastructure/http/handlers/docs"
 	"github.com/DiegoSepuSoto/mini-url-service/src/infrastructure/http/handlers/health"
 	"github.com/DiegoSepuSoto/mini-url-service/src/infrastructure/http/handlers/metrics"
 	miniurlHandler "github.com/DiegoSepuSoto/mini-url-service/src/infrastructure/http/handlers/miniurl"
