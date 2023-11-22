@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+	log "github.com/sirupsen/logrus"
 )
 
 func (h *miniURLHandler) GetMinifiedURL(c echo.Context) error {
@@ -13,6 +14,7 @@ func (h *miniURLHandler) GetMinifiedURL(c echo.Context) error {
 
 	minifiedURLResponse, err := h.miniURLUseCase.GetMinifiedURL(ctx, miniURL)
 	if err != nil {
+		log.Error(err)
 		return c.JSON(http.StatusInternalServerError, echo.Map{"message": "error retrieving minified url"})
 	}
 
