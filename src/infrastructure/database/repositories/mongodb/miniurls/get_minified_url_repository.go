@@ -15,7 +15,7 @@ import (
 func (r *miniURLsRepository) GetMinifiedURL(ctx context.Context, miniURL string) (string, error) {
 	filter := bson.D{{Key: "new_url", Value: miniURL}}
 
-	var miniURLRecord entities.MiniURLRecord
+	var miniURLRecord *entities.MiniURLRecord
 	err := r.mongoDBCollection.FindOne(ctx, filter).Decode(&miniURLRecord)
 	if err != nil {
 		if err.Error() == mongo.ErrNoDocuments.Error() {
