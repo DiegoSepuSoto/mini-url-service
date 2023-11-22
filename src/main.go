@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"github.com/DiegoSepuSoto/mini-url-service/src/infrastructure/http/handlers/docs"
 	"os"
 	"os/signal"
 	"syscall"
@@ -45,7 +46,7 @@ func main() {
 	e.Use(middleware.Logger())
 
 	metrics.NewMetricsHandler(e)
-
+	docs.NewSwaggerHandler(e)
 	health.NewHealthHandler(e)
 
 	miniURLHandler(e)
