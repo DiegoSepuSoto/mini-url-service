@@ -28,7 +28,8 @@ func (h *miniURLHandler) GetMinifiedURL(c echo.Context) error {
 	minifiedURLResponse, err := h.miniURLUseCase.GetMinifiedURL(ctx, miniURL)
 	if err != nil {
 		log.Error(err)
-		return c.JSON(http.StatusInternalServerError, &shared.EchoErrorResponse{Message: "error retrieving minified url"})
+		return c.JSON(shared.GetHTTPStatusErrorCode(err),
+			&shared.EchoErrorResponse{Message: "error retrieving minified url"})
 	}
 
 	log.WithFields(

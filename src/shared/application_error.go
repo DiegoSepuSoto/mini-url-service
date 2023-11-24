@@ -1,6 +1,9 @@
 package shared
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
 
 const (
 	DatabaseNotFoundError = "DB_NOT_FOUND"
@@ -29,4 +32,13 @@ func BuildError(httpStatusCode int, errorCode, errorDescription, errorOrigin str
 		ErrorDescription: errorDescription,
 		ErrorOrigin:      errorOrigin,
 	}
+}
+
+func GetHTTPStatusErrorCode(err error) int {
+	applicationError, ok := err.(*ApplicationError)
+	if ok {
+		return applicationError.HTTPStatusCode
+	}
+
+	return http.StatusInternalServerError
 }
