@@ -22,7 +22,7 @@ import (
 // @Failure      500  {object}  shared.EchoErrorResponse "Application Error"
 // @Router       /api/{mini-url} [get]
 func (h *miniURLHandler) GetMinifiedURL(c echo.Context) error {
-	ctx, span := otel.Tracer(shared.TracerName).Start(c.Request().Context(), "GetMinifiedURL")
+	ctx, span := otel.Tracer(shared.TracerName).Start(c.Request().Context(), "GetMinifiedURLHandler")
 	defer span.End()
 
 	miniURL := c.Param("mini-url")
