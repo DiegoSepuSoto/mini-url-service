@@ -1,11 +1,11 @@
 package miniurl
 
 import (
-	"go.opentelemetry.io/otel"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"
+	"go.opentelemetry.io/otel"
 
 	"github.com/DiegoSepuSoto/mini-url-service/src/shared"
 )

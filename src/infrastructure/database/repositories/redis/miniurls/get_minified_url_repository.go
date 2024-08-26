@@ -3,12 +3,17 @@ package miniurls
 import (
 	"context"
 
-	log "github.com/sirupsen/logrus"
-
 	"github.com/redis/go-redis/v9"
+	log "github.com/sirupsen/logrus"
+	"go.opentelemetry.io/otel"
+
+	"github.com/DiegoSepuSoto/mini-url-service/src/shared"
 )
 
 func (r *miniURLsRepository) GetMinifiedURL(ctx context.Context, miniURL string) (string, error) {
+	ctx, span := otel.Tracer(shared.TracerName).Start(ctx, "GetMinifiedURLRedisRepository")
+	defer span.End()
+
 	minifiedURL, err := r.redisClient.Get(ctx, miniURL).Result()
 	if err != nil {
 		if err.Error() == redis.Nil.Error() {

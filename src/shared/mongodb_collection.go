@@ -7,6 +7,7 @@ import (
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.opentelemetry.io/otel"
 )
 
 type MongoDBCollection interface {
@@ -22,7 +23,12 @@ type MongoDBSingleResult interface {
 }
 
 func (m *mongoDBCollection) FindOne(ctx context.Context, filter interface{}, opts ...*options.FindOneOptions) MongoDBSingleResult {
-	return m.mongoCollection.FindOne(ctx, filter, opts...)
+	ctx, span := otel.Tracer(TracerName).Start(ctx, "MongoDBFindOne")
+	defer span.End()
+
+	result := m.mongoCollection.FindOne(ctx, filter, opts...)
+
+	return result
 }
 
 func CreateMongoDBCollection() *mongoDBCollection {

@@ -3,9 +3,7 @@ package shared
 import (
 	"context"
 	"fmt"
-	"net/http"
 
-	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/propagation"
@@ -14,10 +12,6 @@ import (
 )
 
 const TracerName = "mini-url-service"
-
-var HTTPClient = &http.Client{
-	Transport: otelhttp.NewTransport(http.DefaultTransport),
-}
 
 func InitTelemetryExporter(ctx context.Context) (*sdktrace.TracerProvider, error) {
 	res, err := resource.New(ctx, resource.WithFromEnv())

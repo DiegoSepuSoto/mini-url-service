@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/redis/go-redis/v9"
+	"go.opentelemetry.io/otel"
 )
 
 type RedisClient interface {
@@ -20,7 +21,12 @@ type redisClient struct {
 }
 
 func (c *redisClient) Get(ctx context.Context, key string) RedisStringResult {
-	return c.redisClient.Get(ctx, key)
+	ctx, span := otel.Tracer(TracerName).Start(ctx, "RedisGet")
+	defer span.End()
+
+	result := c.redisClient.Get(ctx, key)
+
+	return result
 }
 
 func CreateRedisClient() *redisClient {
