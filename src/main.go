@@ -38,6 +38,19 @@ func main() {
 	log.SetFormatter(&log.JSONFormatter{})
 	log.SetOutput(os.Stdout)
 
+	ctx := context.Background()
+
+	tp, err := shared.InitTelemetryExporter(ctx)
+	if err != nil {
+		panic(err)
+	}
+
+	defer func() {
+		if err := tp.Shutdown(ctx); err != nil {
+			log.Printf("error shutting down tracer provider: %v", err)
+		}
+	}()
+
 	e := echo.New()
 	e.HideBanner = true
 	e.HidePort = true

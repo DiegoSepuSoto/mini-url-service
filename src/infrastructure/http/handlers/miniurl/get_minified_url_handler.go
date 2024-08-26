@@ -1,7 +1,7 @@
 package miniurl
 
 import (
-	"context"
+	"go.opentelemetry.io/otel"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -22,7 +22,9 @@ import (
 // @Failure      500  {object}  shared.EchoErrorResponse "Application Error"
 // @Router       /api/{mini-url} [get]
 func (h *miniURLHandler) GetMinifiedURL(c echo.Context) error {
-	ctx := context.Background()
+	ctx, span := otel.Tracer(shared.TracerName).Start(c.Request().Context(), "GetMinifiedURL")
+	defer span.End()
+
 	miniURL := c.Param("mini-url")
 
 	minifiedURLResponse, err := h.miniURLUseCase.GetMinifiedURL(ctx, miniURL)
