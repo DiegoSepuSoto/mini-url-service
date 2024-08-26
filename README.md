@@ -9,17 +9,16 @@ This Golang API will serve and return mini URLs created with [Mini URL Builder A
 First: clone the repository:
 
 ```bash
-git clone https://github.com/DiegoSepuSoto/mini-url-service
-cd mini-url-service
+git clone https://github.com/DiegoSepuSoto/mini-url-service && cd mini-url-service
 ```
 
-Then, download the dependencies
+Then, download the dependencies:
 
 ```bash
 go mod download
 ```
 
-Now you can run the application using the Makefile
+Now you can run the application using the Makefile:
 
 ```bash
 make run
